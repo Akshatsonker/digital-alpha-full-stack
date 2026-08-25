@@ -54,4 +54,4 @@ PostgreSQL has an explicit healthcheck, a one-shot seed service runs only after 
 
 ## 14. Deployment choice
 
-The repository includes Dockerfiles and Compose for reproducibility. The architecture is also compatible with the vendors named in the assignment, but this environment cannot publish a public deployment, so live URLs remain TODO in the README.
+The repository includes Dockerfiles and Compose for reproducibility. The browser defaults to a same-origin `/api` path and Next.js proxies that path to FastAPI using `BACKEND_API_URL`. This avoids the common deployment mistake of relying on a `NEXT_PUBLIC_*` value that was not present when the client bundle was built. The architecture is also compatible with the vendors named in the assignment, but this environment cannot publish a public deployment, so live URLs remain TODO in the README.

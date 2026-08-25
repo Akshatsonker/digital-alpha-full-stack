@@ -1,6 +1,6 @@
 import type { Analytics, Filters, RewardsResponse, Transaction, TransactionPage } from "../types";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
 
 function buildQuery(filters: Filters, page?: number, pageSize?: number) {
   const params = new URLSearchParams();

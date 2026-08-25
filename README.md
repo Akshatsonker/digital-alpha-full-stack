@@ -70,11 +70,13 @@ cd frontend
 npm install
 ```
 
-Create `.env.local`:
+Create `.env.local` if you want to call FastAPI directly:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:8000/api
 ```
+
+If `NEXT_PUBLIC_API_URL` is left unset, the frontend uses its `/api` proxy. Set `BACKEND_API_URL=http://localhost:8000/api` for the proxy when running Next.js locally or in a hosted environment.
 
 Then:
 
@@ -146,7 +148,7 @@ The tests cover timestamp/status/amount normalization, the 10,000-row dataset sh
 
 ## Production / deployment
 
-The frontend is designed for Vercel/Netlify and the backend for Render/Railway/Fly with a managed PostgreSQL provider such as Neon/Supabase/Railway. Set `NEXT_PUBLIC_API_URL` on the frontend and `DATABASE_URL` + `CORS_ORIGINS` on the backend.
+The frontend is designed for Vercel/Netlify and the backend for Render/Railway/Fly with a managed PostgreSQL provider such as Neon/Supabase/Railway. Set `BACKEND_API_URL` on the frontend server and `DATABASE_URL` + `CORS_ORIGINS` on the backend. Direct browser-to-API mode can instead use `NEXT_PUBLIC_API_URL` if desired.
 
 For a public submission, add the deployed URLs below before sending the repo:
 

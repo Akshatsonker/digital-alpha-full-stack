@@ -16,5 +16,5 @@ services:
     rootDir: frontend
     plan: free
     envVars:
-      - key: NEXT_PUBLIC_API_URL
+      - key: BACKEND_API_URL
         sync: false
