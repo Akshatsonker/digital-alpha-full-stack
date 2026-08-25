@@ -39,6 +39,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return response.json() as Promise<T>;
 }
 
+
 export async function fetchTransactions(
   filters: Filters,
   page: number,
@@ -64,3 +65,4 @@ export async function redeemReward(rewardId: string) {
     body: JSON.stringify({ reward_id: rewardId }),
   });
 }
+
