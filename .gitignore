@@ -1,0 +1,17 @@
+node_modules/
+.next/
+.env
+.env.local
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+coverage.xml
+htmlcov/
+.DS_Store
+*.log
+
+# Local database volumes
+db-data/
+
+*.tsbuildinfo

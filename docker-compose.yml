@@ -1,0 +1,54 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: digital-alpha-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: digital_alpha
+      POSTGRES_USER: digital_alpha
+      POSTGRES_PASSWORD: digital_alpha
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U digital_alpha -d digital_alpha"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  seed:
+    build: ./backend
+    container_name: digital-alpha-seed
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg://digital_alpha:digital_alpha@postgres:5432/digital_alpha
+    command: python -m app.seed
+    restart: "no"
+
+  backend:
+    build: ./backend
+    container_name: digital-alpha-backend
+    depends_on:
+      seed:
+        condition: service_completed_successfully
+    environment:
+      DATABASE_URL: postgresql+psycopg://digital_alpha:digital_alpha@postgres:5432/digital_alpha
+      CORS_ORIGINS: http://localhost:3000
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./frontend
+    container_name: digital-alpha-frontend
+    depends_on:
+      - backend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000/api
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:
