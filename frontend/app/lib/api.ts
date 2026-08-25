@@ -39,7 +39,6 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return response.json() as Promise<T>;
 }
 
-
 export async function fetchTransactions(
   filters: Filters,
   page: number,
@@ -59,10 +58,16 @@ export async function fetchRewards(): Promise<RewardsResponse> {
   return request<RewardsResponse>("/rewards");
 }
 
-export async function redeemReward(rewardId: string) {
-  return request(`/rewards/redeem`, {
+interface RedeemResponse {
+  success: boolean;
+  message: string;
+  coin_balance: number;
+  reward: unknown;
+}
+
+export async function redeemReward(rewardId: string): Promise<RedeemResponse> {
+  return request<RedeemResponse>(`/rewards/redeem`, {
     method: "POST",
     body: JSON.stringify({ reward_id: rewardId }),
   });
 }
-
