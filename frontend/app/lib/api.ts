@@ -39,3 +39,28 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return response.json() as Promise<T>;
 }
 
+export async function fetchTransactions(
+  filters: Filters,
+  page: number,
+  pageSize: number,
+  signal?: AbortSignal
+): Promise<TransactionPage> {
+  const params = buildQuery(filters, page, pageSize);
+  return request<TransactionPage>(`/transactions?${params.toString()}`, { signal });
+}
+
+export async function fetchAnalytics(filters: Filters, signal?: AbortSignal): Promise<Analytics> {
+  const params = buildQuery(filters);
+  return request<Analytics>(`/analytics?${params.toString()}`, { signal });
+}
+
+export async function fetchRewards(): Promise<RewardsResponse> {
+  return request<RewardsResponse>("/rewards");
+}
+
+export async function redeemReward(rewardId: string) {
+  return request(`/rewards/redeem`, {
+    method: "POST",
+    body: JSON.stringify({ reward_id: rewardId }),
+  });
+}
